@@ -31,24 +31,8 @@ declare_args() {
 # toolchain
 if (host_os == "mac") {
   set_default_toolchain("toolchain/macos:clang")
-}
-
-if (host_os == "linux") {
-  set_default_toolchain("toolchain/linux:cxx")
-}
-
-# default config.
-set_defaults("executable") {
-  configs = [ "//buildconfig:global_config" ]
-  configs += [ "//buildconfig:executable" ]
-}
-
-set_defaults("shared_library") {
-  configs = [ "://buildconfig:global_config" ]
-  configs += [ "//buildconfig:shared_library" ]
-}
-
-set_defaults("static_library") {
-  configs = [ "://buildconfig:global_config" ]
-  configs += [ "//buildconfig:static_libaray" ]
+} else if (host_os == "linux") {
+  set_default_toolchain("toolchain/linux:gcc")
+} else {
+  assert(false, "Unsupported platform!")
 }

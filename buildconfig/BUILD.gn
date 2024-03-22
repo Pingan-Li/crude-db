@@ -5,8 +5,12 @@ config("global_config") {
   cflags_cc = []
   defines = []
   ldflags = []
+  include_dirs = []
 
-  # language version
+  # mono-repo
+  include_dirs += [ "//" ]
+
+  # c/c++ language version
   cflags_c += [ "-std=${std_c}" ]
   cflags_cc += [ "-std=${std_cc}" ]
 
@@ -18,6 +22,7 @@ config("global_config") {
       "-Wall",
       "-Wextra",
     ]
+    defines += [ "DEBUG" ]
   } else if (build_type == "release") {
     cflags += [
       "-O3",
@@ -26,12 +31,16 @@ config("global_config") {
       "-Werror",
     ]
     defines += [ "NDEBUG" ]
+  } else {
+    assert(false, "Unknown build type!")
   }
+
+  # Disable exceptions.
+  cflags_cc += [ "-fno-exceptions" ]
 }
 
 config("executable") {
-  if (host_os == "mac") {
-  } else if (host_os == "linux") {
+  if (host_os == "linux") {
     ldflags = [
       # ld.so understands the string $ORIGIN (or equivalently ${ORIGIN}) in an rpath
       # specification (DT_RPATH or DT_RUNPATH) to mean the directory containing the
@@ -43,7 +52,9 @@ config("executable") {
 }
 
 config("shared_library") {
-  cflags = [ "-fPIC" ]
+  if (host_os == "linux" || host_os == "macos") {
+    cflags = [ "-fPIC" ]
+  }
 }
 
 config("static_libaray") {

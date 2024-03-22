@@ -1,5 +1,7 @@
-executable("hello_world"){
-    sources=[
-        "hello_world.cc"
-    ]
+executable("hello_world") {
+  configs = [
+    "//buildconfig:global_config",
+    "//buildconfig:executable",
+  ]
+  sources = [ "hello_world.cc" ]
 }
