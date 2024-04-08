@@ -32,7 +32,7 @@ declare_args() {
 if (host_os == "mac") {
   set_default_toolchain("toolchain/macos:clang")
 } else if (host_os == "linux") {
-  set_default_toolchain("toolchain/linux:gcc")
+  set_default_toolchain("toolchain/linux:cxx")
 } else {
   assert(false, "Unsupported platform!")
 }

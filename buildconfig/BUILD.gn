@@ -1,5 +1,5 @@
 # Global Config
-config("global_config") {
+config("global") {
   cflags = []
   cflags_c = []
   cflags_cc = []

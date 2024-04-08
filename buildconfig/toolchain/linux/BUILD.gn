@@ -1,4 +1,4 @@
-toolchain("gcc") {
+toolchain("cxx") {
   tool("cc") {
     depfile = "{{output}}.d"
     depsformat = "gcc"
